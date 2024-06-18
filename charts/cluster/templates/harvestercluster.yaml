@@ -17,3 +17,4 @@ spec:
   server: {{ .Values.harvester.server }}
   identitySecret: 
     name: {{ .Release.Name }}-harvester-credentials
+    namespace: {{ .Release.Namespace }}

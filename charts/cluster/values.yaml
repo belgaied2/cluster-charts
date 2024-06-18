@@ -3,7 +3,7 @@ kubernetesVersion: "v1.26.6"
 ## Information about the target Harvester
 harvester:
   namespace: default
-  server: "1.2.3.4"
+  server: "https://1.2.3.4:6443"
   kubeconfigB64: SGVsbG8gV29ybGQgCg==
   ipamType: "dhcp"
   #ipPoolName: ""
