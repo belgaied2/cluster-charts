@@ -1,0 +1,35 @@
+apiVersion: controlplane.cluster.x-k8s.io/v1alpha1
+kind: RKE2ControlPlane
+metadata:
+  name: {{ .Release.Name }}-control-plane
+spec:
+  replicas: {{ .Values.controlPlane.machineCount }}
+  agentConfig:
+    version: {{ .Values.kubernetesVersion }}+rke2r1
+  serverConfig:
+    cni: calico
+    cloudProviderName: external
+  infrastructureRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+    kind: HarvesterMachineTemplate
+    name: {{ .Release.Name }}-cp-machine
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+kind: HarvesterMachineTemplate
+metadata:
+  name: {{ .Release.Name }}-cp-machine
+spec:
+  template: 
+    spec:
+      cpu: {{ .Values.controlPlane.cpuCount }}
+      memory: {{ .Values.controlPlane.memorySize }}
+      sshUser: {{ .Values.controlPlane.sshUser }}
+      sshKeyPair: {{ .Values.controlPlane.sshKeyPair }} 
+      networks:
+      - {{ .Values.controlPlane.vmNetwork }}
+      volumes:
+      - volumeType: image 
+        imageName: {{ .Values.controlPlane.imageName }}
+        volumeSize: {{ .Values.controlPlane.volumeSize }}
+        bootOrder: 0

@@ -1,0 +1,20 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster 
+metadata:
+  name: {{ .Release.Name }} 
+  labels:
+    {{- if .Values.rancherImport }}
+    cluster-api.cattle.io/rancher-auto-import: 'true'
+    {{- end }}
+    ccm: external
+    csi: external
+    cni: external
+spec:
+  controlPlaneRef:
+    apiVersion: controlplane.cluster.x-k8s.io/v1alpha1
+    kind: RKE2ControlPlane
+    name: {{ .Release.Name }}-control-plane
+  infrastructureRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+    kind: HarvesterCluster
+    name: {{ .Release.Name }}

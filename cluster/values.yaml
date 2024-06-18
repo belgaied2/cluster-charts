@@ -1,0 +1,53 @@
+kubernetesVersion: "v1.26.6"
+
+## Information about the target Harvester
+harvester:
+  namespace: default
+  server: "1.2.3.4"
+  kubeconfigB64: SGVsbG8gV29ybGQgCg==
+  ipamType: "dhcp"
+  #ipPoolName: ""
+
+rancherImport: true
+
+controlPlane:
+  machineCount: 3
+  cpuCount: 2
+  imageName: "default/sles15sp5-default"
+  vmNetwork: "default/untagged"
+  volumeSize: 20Gi
+  memorySize: 8Gi
+  sshUser: sles
+  sshKeyPair: default/macos
+
+workers:
+  machineCount: 2
+  cpuCount: 2
+  memorySize: 4Gi
+  imageName: "default/sles15sp5-default"
+  vmNetwork: "default/untagged"
+  volumeSize: 20Gi
+  sshUser: ubuntu
+  sshKeyPair: default/macos
+
+cloudConfigB64: SGVsbG8gV29ybGQgCg==
+
+cloudProviderComponents:
+  nodeDriverRegistrar:
+    repository: rancher/mirrored-longhornio-csi-node-driver-registrar
+    tag: v2.3.0
+  resizer:
+    repository: rancher/mirrored-longhornio-csi-resizer
+    tag: v1.2.0
+  csiDriver:
+    repository: rancher/harvester-csi-driver
+    tag: v0.1.6
+  provisioner:
+    repository: rancher/mirrored-longhornio-csi-provisioner
+    tag: v2.1.2
+  attacher:
+    repository: rancher/mirrored-longhornio-csi-attacher
+    tag: v3.2.1
+  harvesterCloudProvider:
+    repository: rancher/harvester-cloud-provider
+    tag: v0.2.1

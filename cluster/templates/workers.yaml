@@ -1,0 +1,44 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachineDeployment
+metadata:
+  name: {{ .Release.Name }}-workers
+spec:
+  clusterName: {{ .Release.Name }}
+  replicas: {{ .Values.workers.machineCount }}
+  selector:
+    matchLabels:
+      cluster.x-k8s.io/cluster-name: {{ .Release.Name }}
+  template:
+    spec:
+      bootstrap:
+        configRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1alpha1
+          kind: RKE2ConfigTemplate
+          name: {{ .Release.Name }}-worker
+          namespace: {{ .Release.Namespace }}
+      clusterName: {{ .Release.Name }}
+      infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+        kind: HarvesterMachineTemplate
+        name: {{ .Release.Name }}-wk-machine
+        namespace: {{ .Release.Namespace }}
+      version: {{ .Values.kubernetesVersion }}
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+kind: HarvesterMachineTemplate
+metadata:
+  name: {{ .Release.Name }}-wk-machine
+spec:
+  template: 
+    spec:
+      cpu: {{ .Values.workers.cpuCount }}
+      memory: {{ .Values.workers.memorySize }}
+      sshUser: {{ .Values.workers.sshUser }}
+      sshKeyPair: {{ .Values.workers.sshKeyPair }}  
+      networks:
+      - {{ .Values.workers.vmNetwork }}
+      volumes:
+      - volumeType: image 
+        imageName: {{ .Values.workers.imageName }}
+        volumeSize: {{ .Values.workers.volumeSize }}
+        bootOrder: 0

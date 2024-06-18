@@ -1,0 +1,19 @@
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+kind: HarvesterCluster
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  targetNamespace: {{ .Values.harvester.namespace }}
+  loadBalancerConfig:
+    ipamType: {{ .Values.harvester.ipamType | default "dhcp" | quote}}
+    {{- if .Values.harvester.ipamType  }}
+    ipPoolRef: {{  .Values.harvester.ipPoolName  | quote }}
+    {{- end }}
+    listeners:
+    - name: rke2-server
+      port: 9345
+      protocol: TCP
+      backendPort: 9345
+  server: {{ .Values.harvester.server }}
+  identitySecret: 
+    name: {{ .Release.Name }}-harvester-credentials
