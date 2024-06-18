@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  cluster:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-06-18T20:58:16.634627679Z"
+    description: A Helm chart for Deploying RKE2 cluster on Harvester using Cluster
+      API
+    digest: 65b9b572b7add0ac88b9cbf3ea9c681e8019f0a84ed82370a386463bafb47702
+    name: cluster
+    type: application
+    urls:
+    - https://github.com/belgaied2/cluster-charts/releases/download/cluster-0.1.0/cluster-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-06-18T20:58:16.634638118Z"
