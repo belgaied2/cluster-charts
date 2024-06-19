@@ -26,7 +26,7 @@ data:
               env:
                 - name: ADDRESS
                   value: /csi/csi.sock
-              image: {{ .Values.cloudProviderComponents.nodeDriverRegistrar.repository }}: {{  .Values.cloudProviderComponents.nodeDriverRegistrar.tag }}
+              image: {{ .Values.cloudProviderComponents.nodeDriverRegistrar.repository }}:{{  .Values.cloudProviderComponents.nodeDriverRegistrar.tag }}
               lifecycle:
                 preStop:
                   exec:
@@ -55,7 +55,7 @@ data:
                       fieldPath: spec.nodeName
                 - name: CSI_ENDPOINT
                   value: unix:///csi/csi.sock
-              image: {{ .Values.cloudProviderComponents.csiDriver.repository }}: {{  .Values.cloudProviderComponents.csiDriver.tag }}
+              image: {{ .Values.cloudProviderComponents.csiDriver.repository }}:{{  .Values.cloudProviderComponents.csiDriver.tag }}
               imagePullPolicy: Always
               lifecycle:
                 preStop:
@@ -293,7 +293,7 @@ data:
             - --cloud-config=/etc/kubernetes/cloud-config
             command:
             - harvester-cloud-provider
-            image: {{  .Values.cloudProviderComponents.harvesterCloudProvider.repository }}: {{  .Values.cloudProviderComponents.harvesterCloudProvider.tag }}
+            image: {{  .Values.cloudProviderComponents.harvesterCloudProvider.repository }}:{{  .Values.cloudProviderComponents.harvesterCloudProvider.tag }}
             imagePullPolicy: Always
             name: harvester-cloud-provider
             resources: {}
